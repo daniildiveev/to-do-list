@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Task(models.Model):
-    title = models.CharField("name", max_length=100, related_name="tasks")
+    title = models.CharField("name", max_length=100)
     creator = models.CharField("creator", max_length=100)
     description = models.CharField("description", max_length=1000)
     status = models.CharField("status", max_length=20)
