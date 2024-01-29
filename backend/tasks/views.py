@@ -21,7 +21,7 @@ def tasks_list(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['DELETE'])
+@api_view(['DELETE', 'PUT'])
 def tasks_delete(request, pk):
     try:
         task = Task.objects.get(id=pk)
@@ -30,3 +30,10 @@ def tasks_delete(request, pk):
     if request.method == 'DELETE':
         task.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    if request.method == 'PUT':
+        serializer = TaskSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(data=status.HTTP_204_NO_CONTENT)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
